@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Front page</title>
+    <style>
+        :root {
+            --foreground: #555555;
+            --background: #fcfcfc;
+            --card-foreground: #555555;
+            --card-background: #e1e1e1;
+
+            --dark-foreground: #fafafa;
+            --dark-background: #1d1d1d;
+            --dark-card-foreground: #D8DEE9;
+            --dark-card-background: #262626;
+
+            --foreground-hover: #81A1C1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'FiraCode Nerd Font Mono', 'FiraCode NF', 'Fira Code', 'Ubuntu Mono', 'Courier New', Courier, 'Roboto Mono', monospace;
+            color: var(--foreground);
+            background-color: var(--background);
+        }
+
+        body.dark {
+            color: var(--dark-foreground);
+            background-color: var(--dark-background);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .links>div {
+            padding: 0 10px;
+        }
+
+        .links a {
+            background-color: var(--card-background);
+            padding: 14px 16px;
+            text-align: center;
+            border-radius: 4px;
+            display: block;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .links a {
+            color: var(--card-foreground);
+        }
+
+        .dark .links a {
+            color: var(--dark-card-foreground);
+            background-color: var(--dark-card-background);
+        }
+
+        .links a:hover {
+            color: var(--foreground-hover);
+        }
+
+        .datetime {
+            text-align: center;
+        }
+
+        #date {
+            color: #999999;
+        }
+
+        .search-input {
+            height: 40px;
+            width: 320px;
+            background-color: var(--card-background);
+            color: var(--foreground);
+            border: none;
+            border-radius: 4px;
+            padding: 0 10px;
+            margin: 0 auto;
+        }
+
+        .dark .search-input {
+            background-color: var(--dark-card-background);
+            color: var(--dark-foreground);
+        }
+
+        .theme-switch-container {
+            margin-top: auto;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .theme-switch-container>button {
+            background-color: transparent;
+            color: var(--foreground);
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dark .theme-switch-container>button {
+            color: var(--dark-foreground);
+        }
+
+        .theme-switch-container>button:active {
+            border: none;
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mt-lg {
+            margin-top: 12%;
+        }
+
+        .mb-4 {
+            margin-bottom: 1.4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="theme-switch-container">
+        <button id="theme-switcher" type="button">&star;</button>
+    </div>
+    <div class="container">
+        <div class="mt-lg datetime">
+            <p id="date">01/01/2020</p>
+            <h1 id="time">00:00:00</h1>
+        </div>
+        <div class="flex-center mb-4">
+            <form id="search-form" action="https://www.google.com/search" target="_blank">
+                <input name="q" class="search-input" type="text" placeholder="Search Google...">
+            </form>
+        </div>        
+        <!-- <div class="flex-center mb-4">
+            <form id="search-form" action="https://duckduckgo.com/">
+                <input name="q" class="search-input" type="text" placeholder="Search DuckDuckGo...">
+            </form>
+        </div> -->
+        <div class="flex-center links">
+            <div>
+                <a href="https://github.com">GitHub</a>
+                <a href="https://www.office.com/">Office 365</a>
+                <a href="https://www.youtube.com/">YouTube</a>
+                <a href="https://mail.google.com">Gmail</a>
+                <a href="https://hkylmass-my.sharepoint.com/personal/s20220100_ylmass_edu_hk/_layouts/15/onedrive.aspx?login_hint=s20220100%40ylmass%2Eedu%2Ehk">OneDrive for School</a>
+            </div>
+            <div>
+                <a href="https://web.whatsapp.com">WhatsApp</a>
+                <a href="https://www.office.com/launch/onenote?auth=2">OneNote</a>
+                <a href="https://onedrive.live.com/">OneDrive for Personal</a>
+                <a href="https://dash.cloudflare.com/e7f110426eecc26b1dd505542c89c61c">Cloudflare</a>
+                <a href="https://teams.microsoft.com/_#/school/?ctx=teamsGrid">Teams</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // set dark theme
+    var body = document.getElementsByTagName('body')[0]
+
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        body.classList.add('dark')
+    }
+
+    // update date and time
+    var date = document.getElementById("date")
+    var time = document.getElementById("time")
+
+    var setTime = function () {
+        date.innerHTML = new Date().toLocaleDateString("pt-br")
+        time.innerHTML = new Date().toLocaleTimeString("pt-br")
+    };
+
+    setInterval(setTime, 1000)
+    setTime()
+
+    // toggle dark theme on button press
+    var themeSwitcher = document.getElementById('theme-switcher')
+
+    themeSwitcher.onclick = function () {
+        if (body.classList.contains('dark')) {
+            body.classList.remove('dark')
+        } else {
+            body.classList.add('dark')
+        }
+    }
+</script>
+
+</html>
